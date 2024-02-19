@@ -6,7 +6,7 @@ type Props = {}
 
 export default function page({}: Props) {
   return (
-    <div className='fle flex-col space-y-4'>
+    <div className='flex flex-col space-y-4'>
       <ProductDetails />
       <CommentCard />
     </div>
