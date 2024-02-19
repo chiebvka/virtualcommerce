@@ -1,13 +1,27 @@
 import React from 'react'
 import ProductDetails from './_components/ProductDetails'
 import CommentCard from './_components/CommentCard'
+import { getProductBySlug } from '@/sanity/utils';
 
-type Props = {}
+type Props = {
+  params: {
+    slug: string;
+  };
+};
 
-export default function page({}: Props) {
+export default async function Page({ params }: Props) {
+  const {slug} = params
+  const product = await getProductBySlug(slug);
+
+  if(!product) {
+    return {
+      notFound:true
+    }
+  }
+
   return (
     <div className='flex flex-col space-y-4'>
-      <ProductDetails />
+      <ProductDetails product={product[0]} />
       <CommentCard />
     </div>
   )

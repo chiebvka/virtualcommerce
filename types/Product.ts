@@ -8,10 +8,6 @@ export type Product = {
     category: { name: string, _id: string}[];
     size: { name: string, _id: string }[];
     color: { name: string, _id: string }[];
-    extraImages: { name: string, _id: string }[];
-    design: {
-        designer: string;
-        portfolio: string
-    };
+    extraImages: string[];
     image: string;
 }

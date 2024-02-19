@@ -5,8 +5,25 @@ import Image from 'next/image';
 import { produces } from '@/config';
 import { RadioGroup } from '@headlessui/react';
 import { Star } from 'lucide-react';
+import { formatPrice } from '@/lib/format';
 
-type Props = {}
+
+
+interface Product {
+    description: string;
+    extraImages: string[];
+    color: {name: string, _id: string}[];
+    size: {name: string, _id: string}[];
+    slug: string;
+    image: string ;
+    name: string;
+    price: number;
+    // Add other necessary properties here
+  }
+  
+  type Props = {
+    product: Product;
+  };
 
 const reviews = { href: '#', average: 4, totalCount: 117 }
 
@@ -14,13 +31,20 @@ function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(' ')
   }
 
-export default function producesDetails({}: Props) {
+export default function producesDetails({product}: Props) {
+
+{
+
+    JSON.stringify(product)
+}
 
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [selectedColor, setSelectedColor] = useState(produces.colors[0])
+    const [selectedColor, setSelectedColor] = useState<string>(product.color[0].name);
+
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [selectedSize, setSelectedSize] = useState(produces.sizes[2])
+    const [selectedSize, setSelectedSize] = useState<string>(product.size[0].name);
+
 
 
   return (
@@ -28,6 +52,7 @@ export default function producesDetails({}: Props) {
         <div className=" w-11/12 mx-auto sm:pt-24 lg:pt-40">
             <div className="bg-white">
         <div className="pt-6">
+           {JSON.stringify(product)}
             <nav aria-label="Breadcrumb">
             <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
                 {produces.breadcrumbs.map((breadcrumb) => (
@@ -59,39 +84,39 @@ export default function producesDetails({}: Props) {
 
             {/* Image gallery */}
             <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
-            <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
+            <div className="aspect-h-4 aspect-w-3 hidden border-2 border-palette  overflow-hidden rounded-lg lg:block">
                 <Image
-                src={produces.images[0].src}
-                alt={produces.images[0].alt}
+                src={product.extraImages[0]}
+                alt={product.slug}
                 width={500}
                 height={500}
                 className="h-full w-full object-cover object-center"
                 />
             </div>
             <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
-                <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
+                <div className="aspect-h-2 border-2 border-palette  aspect-w-3 overflow-hidden rounded-lg">
                 <Image
-                    src={produces.images[1].src}
-                    alt={produces.images[1].alt}
+                    src={product.extraImages[0]}
+                    alt={product.slug}
                     width={500}
                     height={500}
                     className="h-full w-full object-cover object-center"
                 />
                 </div>
-                <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
+                <div className="aspect-h-2 aspect-w-3 border-2 border-palette overflow-hidden rounded-lg">
                 <Image
-                    src={produces.images[2].src}
-                    alt={produces.images[2].alt}
+                    src={product.extraImages[1]}
+                    alt={product.slug}
                     width={500}
                     height={500}
                     className="h-full w-full object-cover object-center"
                 />
                 </div>
             </div>
-            <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
+            <div className="aspect-h-5 aspect-w-4  border-2 border-palette lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
                 <Image
-                src={produces.images[3].src}
-                alt={produces.images[3].alt}
+                src={product.image}
+                alt={product.slug}
                 width={500}
                 height={500}
                 className="h-full w-full object-cover object-center"
@@ -102,20 +127,24 @@ export default function producesDetails({}: Props) {
             {/* produces info */}
             <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
             <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-                <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{produces.name}</h1>
+                <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{product.name}</h1>
             </div>
 
             {/* Options */}
             <div className="mt-4 lg:row-span-3 lg:mt-0">
                 <h2 className="sr-only">produces information</h2>
-                <p className="text-3xl tracking-tight text-gray-900">{produces.price}</p>
+                <p className="text-3xl tracking-tight text-gray-900">{formatPrice(product.price)}</p>
 
                 {/* Reviews */}
                 <div className="mt-6">
                 <h3 className="sr-only">Reviews</h3>
                 <div className="flex items-center">
                     <div className="flex items-center">
-                    {[0, 1, 2, 3, 4].map((rating) => (
+                    <svg className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <p className="ml-1 text-sm font-bold text-gray-900 dark:text-white">4.85</p>
+                            <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
+                            <span className="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white">41 reviews</span>
+                    {/* {[0, 1, 2, 3, 4].map((rating) => (
                         <Star
                         key={rating}
                         className={classNames(
@@ -124,12 +153,12 @@ export default function producesDetails({}: Props) {
                         )}
                         aria-hidden="true"
                         />
-                    ))}
+                    ))} */}
                     </div>
-                    <p className="sr-only">{reviews.average} out of 5 stars</p>
+                    {/* <p className="sr-only">{reviews.average} out of 5 stars</p>
                     <a href={reviews.href} className="ml-3 text-sm font-medium text-palette hover:text-palette/30">
                     {reviews.totalCount} reviews
-                    </a>
+                    </a> */}
                 </div>
                 </div>
 
@@ -137,37 +166,38 @@ export default function producesDetails({}: Props) {
                 {/* Colors */}
                 <div>
                     <h3 className="text-sm font-medium text-gray-900">Color</h3>
-
+                    {/* Color Selection Circles */}
                     <RadioGroup value={selectedColor} onChange={setSelectedColor} className="mt-4">
-                    <RadioGroup.Label className="sr-only">Choose a color</RadioGroup.Label>
-                    <div className="flex items-center space-x-3">
-                        {produces.colors.map((color) => (
-                        <RadioGroup.Option
-                            key={color.name}
-                            value={color}
-                            className={({ active, checked }) =>
-                            classNames(
-                                color.selectedClass,
-                                active && checked ? 'ring ring-offset-1' : '',
-                                !active && checked ? 'ring-2' : '',
-                                'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'
-                            )
-                            }
-                        >
-                            <RadioGroup.Label as="span" className="sr-only">
-                            {color.name}
-                            </RadioGroup.Label>
-                            <span
-                            aria-hidden="true"
-                            className={classNames(
-                                color.class,
-                                'h-8 w-8 rounded-full border border-black border-opacity-10'
-                            )}
-                            />
-                        </RadioGroup.Option>
-                        ))}
-                    </div>
+                        <RadioGroup.Label className="sr-only">Choose a color</RadioGroup.Label>
+                        <div className="flex items-center space-x-3">
+                            {product.color.map((cool) => (
+                                <RadioGroup.Option
+                                    key={cool._id}
+                                    value={cool}
+                                    className={({ active, checked }) =>
+                                        classNames(
+                                            active ? 'border-4 border-palette' : '',
+                                            !active && checked ? 'ring-2' : '',
+                                            'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'
+                                        )
+                                    }
+                                >
+                                    <RadioGroup.Label as="span" className="sr-only">
+                                        {cool.name}
+                                    </RadioGroup.Label>
+                                    <span
+                                        aria-hidden="true"
+                                        className={classNames(
+                                            'h-8 w-8 rounded-full border border-black border-opacity-10',
+                                            cool.name === selectedColor ? 'border-[#5b20b6]' : ''
+                                        )}
+                                        style={{ backgroundColor: cool.name }}
+                                    />
+                                </RadioGroup.Option>
+                            ))}
+                        </div>
                     </RadioGroup>
+        
                 </div>
 
                 {/* Sizes */}
@@ -182,34 +212,23 @@ export default function producesDetails({}: Props) {
                     <RadioGroup value={selectedSize} onChange={setSelectedSize} className="mt-4">
                     <RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>
                     <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                        {produces.sizes.map((size) => (
+                        {product.size.map((sic) => (
                         <RadioGroup.Option
-                            key={size.name}
-                            value={size}
-                            disabled={!size.inStock}
-                            className={({ active }) =>
+                            key={sic._id}
+                            value={sic.name}
+                            // disabled={!size.inStock}
+                            className={({ active, checked }) =>
                             classNames(
-                                size.inStock
-                                ? 'cursor-pointer bg-white text-gray-900 shadow-sm'
-                                : 'cursor-not-allowed bg-gray-50 text-gray-200',
-                                active ? 'ring-2 ring-palette/30' : '',
+                                active ? 'border-4 border-palette' : '',
+                                !active && checked ? 'border' : '',
                                 'group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6'
                             )
                             }
                         >
                             {({ active, checked }) => (
                             <>
-                                <RadioGroup.Label as="span">{size.name}</RadioGroup.Label>
-                                {size.inStock ? (
-                                <span
-                                    className={classNames(
-                                    active ? 'border' : 'border-2',
-                                    checked ? 'border-palette/30' : 'border-transparent',
-                                    'pointer-events-none absolute -inset-px rounded-md'
-                                    )}
-                                    aria-hidden="true"
-                                />
-                                ) : (
+                                <RadioGroup.Label as="span">{sic.name}</RadioGroup.Label>
+        
                                 <span
                                     aria-hidden="true"
                                     className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
@@ -223,7 +242,7 @@ export default function producesDetails({}: Props) {
                                     <line x1={0} y1={100} x2={100} y2={0} vectorEffect="non-scaling-stroke" />
                                     </svg>
                                 </span>
-                                )}
+                         
                             </>
                             )}
                         </RadioGroup.Option>
@@ -247,7 +266,7 @@ export default function producesDetails({}: Props) {
                 <h3 className="sr-only">Description</h3>
 
                 <div className="space-y-6">
-                    <p className="text-base text-gray-900">{produces.description}</p>
+                    <p className="text-base text-gray-900">{product.description}</p>
                 </div>
                 </div>
 
