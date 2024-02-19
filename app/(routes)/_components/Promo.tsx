@@ -1,13 +1,7 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
-import aloha from '../../../public/aloha.jpg'
-import beta from '../../../public/beta.jpg'
-import calma from '../../../public/calma.jpg'
-import delta from '../../../public/delta.jpg'
-import junce from '../../../public/junce.jpg'
-import saw from '../../../public/saw.jpg'
-import tail from '../../../public/tail.jpg'
-import leatg from '../../../public/leatg.jpg'
+
 
 type Props = {}
 
@@ -17,8 +11,8 @@ export default function Promo({}: Props) {
       <div className="pb-80 w-11/12 mx-auto sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
         <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
           <div className="sm:max-w-lg">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              Summer styles are finally here
+            <h1 className="lg:text-3xl md:text-2xl tracking-tight text-base text-palette font-bold">
+              Best Deals for the most most quality DIY Products
             </h1>
             <p className="mt-4 text-xl text-gray-500">
               This year, our new summer collection will shelter you from the harsh elements of a world that doesn&apos;t care
@@ -107,12 +101,12 @@ export default function Promo({}: Props) {
                 </div>
               </div>
 
-              <a
-                href="#"
-                className="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700"
+              <Link
+                href="/products"
+                className="inline-block rounded-md border border-transparent bg-palette px-8 py-3 text-center font-medium text-white hover:bg-palette/80"
               >
                 Shop Collection
-              </a>
+              </Link>
             </div>
           </div>
         </div>

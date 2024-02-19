@@ -1,4 +1,4 @@
-"use client "
+
 
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
@@ -18,12 +18,16 @@ import {
     CarouselNext,
     CarouselPrevious,
   } from "@/components/ui/carousel";
-import { products } from '@/config';
+
 import Image from 'next/image';
+import { getProducts } from '@/sanity/utils';
 
 type Props = {headings: string, link: string}
 
-export default function ProductCard({headings, link}: Props) {
+export default async function ProductCard({headings, link}: Props) {
+
+    const products =await getProducts();
+
   return (
     <div className='relative my-8 overflow-hidden bg-white'>
         <div className=' w-11/12 mx-auto  '>
@@ -35,26 +39,26 @@ export default function ProductCard({headings, link}: Props) {
             </div>
             <Carousel className="flex relative w-full border-l-2 pl-2  py-3  shadow-lg ">
             <CarouselContent className=" flex -ml-2 gap-x-5">
-                {products.map((product) => (
-                    <CarouselItem className=" max-w-[20rem] p-4 w-full  min-w-[20rem] border-2 border-red-600 rounded-lg shadow-lg md:basis-1/2 lg:basis-1/3 " key={product.id}>
+                {products?.map((product) => (
+                    <CarouselItem className=" max-w-[20rem] p-4 w-full  min-w-[20rem] border-2 border-red-600 rounded-lg shadow-lg md:basis-1/2 lg:basis-1/3 " key={product._id}>
                         <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-68">
                                 <Image
-                                src={product.imageSrc}
-                                alt={product.imageAlt}
+                                src={product.image}
+                                alt={product.slug}
                                 width={500}
                                 height={400}
-                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                                className="h-full min-h-56 max-h-56 w-full object-cover object-center lg:h-full lg:w-full"
                                 />
                         </div>
                         <div className="mt-4 flex justify-between">
                             <div>
                             <h3 className="text-sm text-gray-700">
-                                <a href={product.href}>
+                                <Link href={`/product/${product.slug}`}>
                                 <span aria-hidden="true" className="absolute inset-0" />
                                 {product.name}
-                                </a>
+                                </Link>
                             </h3>
-                            <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                            {/* <p className="mt-1 text-sm text-gray-500">{product.color}</p> */}
                             </div>
                             <p className="text-sm font-medium text-gray-900">{product.price}</p>
                         </div>

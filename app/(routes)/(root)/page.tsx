@@ -10,6 +10,7 @@ export default function Home() {
     <main>
       <Hero />
       <Promo />
+      
       <ProductCard headings="Popular Products" link="store" />
       <Calls />
       <ProductCard headings="New Products" link="Arrivals" />

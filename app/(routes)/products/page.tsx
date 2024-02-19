@@ -6,10 +6,12 @@ import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
 import FlashCard from './_components/FlashCard'
+import { getAllProducts } from '@/sanity/utils'
 
 type Props = {}
 
-export default function page({}: Props) {
+
+export default async function page({}: Props) {
   return (
     <div className='min-h-screen w-full relative my-auto py-16 gap-y-5 px-3 max-w-7xl mx-auto'>
       <PageHeadings

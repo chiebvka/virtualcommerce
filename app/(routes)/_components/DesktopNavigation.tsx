@@ -2,7 +2,14 @@ import { Button } from '@/components/ui/button'
 import { navigationLink } from '@/config';
 import { Bookmark, ShoppingCart } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
+import React from 'react';
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/nextjs";
 
 type Props = {}
 
@@ -36,9 +43,16 @@ export default function DesktopNavigation({}: Props) {
               </Link>
             </div>
             <div className="flex -mt-2 ml-4">
-              <Link href="/login">
+            <SignedIn>
+              {/* Mount the UserButton component */}
+              <UserButton />
+            </SignedIn>
+            <SignedOut>
+              {/* Signed out users get sign in button */}
+              <Link href="/sign-in">
                 <Button >Sign In</Button>
               </Link>
+            </SignedOut>
             </div>
           </div>
         </nav>

@@ -10,7 +10,13 @@ import { AlignLeft, Bookmark, ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button'
-
+import {
+    ClerkProvider,
+    SignedIn,
+    SignedOut,
+    SignInButton,
+    UserButton,
+  } from "@clerk/nextjs";
 import { usePathname, useRouter } from 'next/navigation';
 import { navigationLink } from '@/config';
 
@@ -80,9 +86,16 @@ export default function MobileNavigation({}: Props) {
                 </div>
                 <span className="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-palette text-white text-[10px]">0</span>
             </Link>
-            <Link href="/login">
+            <SignedIn>
+              {/* Mount the UserButton component */}
+              <UserButton />
+            </SignedIn>
+            <SignedOut>
+              {/* Signed out users get sign in button */}
+              <Link href="/sign-in">
                 <Button >Sign In</Button>
               </Link>
+            </SignedOut>
 
         </div>
     </div>
