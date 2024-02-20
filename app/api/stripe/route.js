@@ -13,7 +13,7 @@ export async function POST(req) {
       currency: "GBP",
     });
 
-    //console.log(paymentIntent)
+    // console.log(paymentIntent)
 
     return NextResponse.json({intent:paymentIntent?.client_secret, status: 200 });
   } catch (error) {

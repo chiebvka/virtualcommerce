@@ -287,6 +287,11 @@ const order = {
       type: "string",
     },
     {
+      name: "size",
+      title: "Size",
+      type: "string",
+    },
+    {
       name: "createdAt",
       title: "Created At",
       type: "datetime",

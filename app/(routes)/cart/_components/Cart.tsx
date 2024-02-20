@@ -30,7 +30,7 @@ import { createOrder } from '@/sanity/utils';
 
 type Props = {}
 
-export default function Cart({}: Props) {
+export default  function Cart({}: Props) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const cart = useCartStore((state) => state.cart)
     const removeFromCart = useCartStore((state) => state.removeFromCart);
@@ -70,7 +70,7 @@ export default function Cart({}: Props) {
             data: { amount: totals.toFixed(0) },
           });
     
-          console.log(data);
+          // console.log(data);
           const res = await stripe?.confirmCardPayment(data?.data?.intent, {
             payment_method: { card: cardElement },
           });
@@ -85,9 +85,9 @@ export default function Cart({}: Props) {
             const email = user?.emailAddresses[0]?.emailAddress;
     
             if(email){
-              const res = await createOrder(email,cart);
+              const res = await createOrder(email, cart);
               if(res) {
-              router.push("/order");
+              router.push("/orders");
               }
             }
             

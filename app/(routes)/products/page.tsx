@@ -127,7 +127,7 @@ export default async function page({}: Props) {
           </p>
 
           {/** Product Grid */}
-          <div className='mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16'>
+          <div className='mx-auto grid grid-cols-1 md:grid-cols-2  gap-8'>
           {/* {currentProducts?.map((product) => (
             <FlashCard key={product._id} product={product} />
             ))} */}
