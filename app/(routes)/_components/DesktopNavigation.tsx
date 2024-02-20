@@ -1,5 +1,7 @@
+"use client"
 import { Button } from '@/components/ui/button'
 import { navigationLink } from '@/config';
+
 import { Bookmark, ShoppingCart } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react';
@@ -10,10 +12,13 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/nextjs";
+import useCartStore from '@/cartStore';
 
 type Props = {}
 
 export default function DesktopNavigation({}: Props) {
+
+  const totalIems = useCartStore((state) => state.totalItems)
   return (
     <>
         <nav className="mx-auto hidden max-w-7xl w-full items-center border-2 border-black justify-between p-4 py-6 md:flex">
@@ -29,17 +34,17 @@ export default function DesktopNavigation({}: Props) {
           </div>
             <div className="flex">
             <div className="flex mx-4 space-x-4">
-              <Link href="/wishlist" className="text-center text-gray-700 hover:text-slate-400 transition relative">
+              <Link href="/orders" className="text-center text-gray-700 hover:text-slate-400 transition relative">
                   <div className="text-2xl">
                       <Bookmark  size={25} />
                   </div>
                   <span className="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-palette text-white text-[10px]">0</span>
               </Link>
-              <Link href="/cart" className="text-center text-gray-700 hover:text-slate-400 transition relative">
+              <Link href="/cart"  className="text-center text-gray-700 hover:text-slate-400 transition relative">
                   <div className="text-2xl">
                       <ShoppingCart size={25} />
                   </div>
-                  <span className="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-palette text-white text-[10px]">0</span>
+                  <span className="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-palette text-white text-[10px]">{totalIems}</span>
               </Link>
             </div>
             <div className="flex -mt-2 ml-4">
