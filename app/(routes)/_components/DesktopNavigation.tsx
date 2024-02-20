@@ -21,7 +21,7 @@ export default function DesktopNavigation({}: Props) {
   const totalIems = useCartStore((state) => state.totalItems)
   return (
     <>
-        <nav className="mx-auto hidden max-w-7xl w-full items-center border-2 border-black justify-between p-4 py-6 md:flex">
+        <nav className="mx-auto hidden max-w-7xl w-full items-center  justify-between p-4 py-6 md:flex">
             <Link href="/" className='rounded-md no-underline   text-palette bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm'>Virtual Commerce</Link>
             <div className=" flex flex-col gap-y-2 ">
             <div className="flex  mt-2 items-center justify-center gap-x-6">

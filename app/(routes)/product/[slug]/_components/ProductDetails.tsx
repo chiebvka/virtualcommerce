@@ -74,7 +74,6 @@ export default function producesDetails({product}: Props) {
         <div className=" w-11/12 mx-auto sm:pt-24 lg:pt-40">
             <div className="bg-white">
         <div className="pt-6">
-           {JSON.stringify(product)}
             <nav aria-label="Breadcrumb">
             <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
                 {produces.breadcrumbs.map((breadcrumb) => (
@@ -250,28 +249,6 @@ export default function producesDetails({product}: Props) {
 
                 <div className="space-y-6">
                     <p className="text-base text-gray-900">{product.description}</p>
-                </div>
-                </div>
-
-                <div className="mt-10">
-                <h3 className="text-sm font-medium text-gray-900">Highlights</h3>
-
-                <div className="mt-4">
-                    <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
-                    {produces.highlights.map((highlight) => (
-                        <li key={highlight} className="text-gray-400">
-                        <span className="text-gray-600">{highlight}</span>
-                        </li>
-                    ))}
-                    </ul>
-                </div>
-                </div>
-
-                <div className="mt-10">
-                <h2 className="text-sm font-medium text-gray-900">Details</h2>
-
-                <div className="mt-4 space-y-6">
-                    <p className="text-sm text-gray-600">{produces.details}</p>
                 </div>
                 </div>
             </div>

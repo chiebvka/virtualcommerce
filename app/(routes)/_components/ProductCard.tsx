@@ -41,7 +41,7 @@ export default async function ProductCard({headings, link}: Props) {
             <Carousel className="flex relative w-full border-l-2 pl-2  py-3  shadow-lg ">
             <CarouselContent className=" flex -ml-2 gap-x-5">
                 {products?.map((product: { _id: React.Key | null | undefined; slug: string; image: string | StaticImport; name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | Iterable<React.ReactNode> | null | undefined; description: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | Iterable<React.ReactNode> | null | undefined; price: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | Iterable<React.ReactNode> | null | undefined; }) => (
-                    <CarouselItem className=" max-w-[20rem] p-4 w-full relative min-w-[20rem] border-2 border-red-600 rounded-lg shadow-lg md:basis-1/2 lg:basis-1/3 " key={product._id}>
+                    <CarouselItem className=" max-w-[20rem] p-4 w-full relative min-w-[20rem] border rounded-lg shadow-lg md:basis-1/2 lg:basis-1/3 " key={product._id}>
                         <Link href={`/product/${product.slug}`}>
                             <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-68">
                                     <Image

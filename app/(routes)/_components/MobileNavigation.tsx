@@ -46,7 +46,7 @@ export default function MobileNavigation({}: Props) {
     };
 
   return (
-    <div className='"mx-auto  md:hidden w-full items-center border-2 border-black justify-between p-3 py-6 '>
+    <div className='"mx-auto  md:hidden w-full items-center justify-between p-3 py-6 '>
     <div className="flex w-full items-center justify-between">
         <div className='flex'>
             <Sheet>
@@ -83,6 +83,12 @@ export default function MobileNavigation({}: Props) {
             <Link href="/cart" className="text-center text-gray-700 mt-2 hover:text-slate-400 mr-3 transition relative">
                 <div className="text-2xl">
                     <ShoppingCart  size={25} />
+                </div>
+                <span className="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-palette text-white text-[10px]">0</span>
+            </Link>
+            <Link href="/orders" className="text-center text-gray-700 mt-2 hover:text-slate-400 mr-3 transition relative">
+                <div className="text-2xl">
+                    <Bookmark  size={25} />
                 </div>
                 <span className="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-palette text-white text-[10px]">0</span>
             </Link>
