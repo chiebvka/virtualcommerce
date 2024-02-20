@@ -26,7 +26,7 @@ interface Product {
 }
 
 
-export default async function page({}: Props) {
+export default  function page({}: Props) {
 
   const [data, setData] = useState<Product[]>([]); 
   const [minPrice, setMinPrice] = useState('');
@@ -101,7 +101,7 @@ export default async function page({}: Props) {
   const currentProducts = data.slice(indexOfFirstProduct, indexOfLastProduct);
 
   // Change page
-  const paginate = (pageNumber: React.SetStateAction<number>) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
     <div className='min-h-screen w-full relative my-auto py-16 gap-y-5 px-3 max-w-7xl mx-auto'>
@@ -109,7 +109,7 @@ export default async function page({}: Props) {
           title='All Products' 
           description='Find your most trusted and reliable brands while also discovering new brands'
       />
-      <div className="flex flex-col md:flex-row border-2 space-y-5 border-black p-8 ">
+        <div className="flex flex-col md:flex-row border-2 space-y-5 border-black p-8 ">
         <div className="mr-5">
             <h1 className="text-2xl font-semibold text-palette mb-4">Filters</h1>
             <div className="space-y-4">
@@ -120,8 +120,8 @@ export default async function page({}: Props) {
                   <Input
                     type="text"
                     placeholder="Search..."
-                    // value={searchQuery}
-                    // onChange={(e) => setSearchQuery(e.target.value)}
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full px-2 py-1 border border-gray-300 rounded-md"
                   />
                 </div>
@@ -134,8 +134,8 @@ export default async function page({}: Props) {
                   <Input
                     type="number"
                     placeholder="Min"
-                    // value={minPrice}
-                    // onChange={(e) => setMinPrice(e.target.value)}
+                    value={minPrice}
+                    onChange={(e) => setMinPrice(e.target.value)}
                     className="w-full px-2 py-1 border border-gray-300 rounded-md"
                   />
                 </div>
@@ -149,8 +149,8 @@ export default async function page({}: Props) {
                 <div className="my-5 relative">
                 <h2 className="text-lg font-medium">Sort</h2>
                   <Select
-                    // value={sortBy}
-                    // onChange={(e) => setSortBy(e.target.value)}
+                    value={sortBy}
+                    onValueChange={(e) => setSortBy(e)}
                     // className="block appearance-none w-full bg-white border border-gray-300 py-2 px-4 pr-8 rounded-md leading-tight focus:outline-none focus:border-[#5B20B6]"
                   >
                     <SelectTrigger className="w-[200px]">
@@ -178,9 +178,9 @@ export default async function page({}: Props) {
             <div className="relative space-y-4 my-5">
               <h2 className="text-lg font-medium">Pagination</h2>
               <Select
-                // value={sortBy}
-                // onChange={(e) => setSortBy(e.target.value)}
-                // className="block appearance-none w-full bg-white border border-gray-300 py-2 px-4 pr-8 rounded-md leading-tight focus:outline-none focus:border-[#5B20B6]"
+                value={productsPerPage.toString()}
+                onValueChange={(e) => setProductsPerPage(Number(e))}
+                
               >
                 <SelectTrigger className="w-[200px]">
                   <SelectValue placeholder="Product Quantity" />
@@ -203,31 +203,47 @@ export default async function page({}: Props) {
               </Select>
             </div>
             <Button
-                // onClick={resetFilters}
+                onClick={resetFilters}
               >
                 Reset
               </Button>
           </div>
-                  
-          <p className='text-sm text-gray-700'>
-            {/* {
-              data.length > productsPerPage && (<>
-                page {currentPage} of {Math.ceil(data.length / productsPerPage)}
-              </>)
-              } */}
-          </p>
+          <div className='flex flex-col items-center space-y-5'>
 
-          {/** Product Grid */}
-          <div className='mx-auto grid grid-cols-1 md:grid-cols-2  gap-8'>
-          {/* {currentProducts?.map((product) => (
-            <FlashCard key={product._id} product={product} />
-            ))} */}
-            <FlashCard  />
-            <FlashCard  />
-            <FlashCard  />
-            <FlashCard  />
-        </div>
-        </div>
-      </div>
+              <p className='text-2xl text-palette'>
+                {
+                  data.length > productsPerPage && (<>
+                    Page {currentPage} of {Math.ceil(data.length / productsPerPage)}
+                  </>)
+                  }
+              </p>
+
+              {/** Product Grid */}
+              <div className='mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-8'>
+              {currentProducts?.map((product) => (
+                <FlashCard key={product._id}  product={product} />
+                ))}
+              </div>
+            {/* Pagination */}
+            <div className="mt-4">
+                {data.length > productsPerPage && (
+                  <ul className="flex list-none justify-center space-x-2">
+                    {Array.from({ length: Math.ceil(data.length / productsPerPage) }, (_, index) => (
+                      <li key={index} className="cursor-pointer">
+                        <a onClick={() => paginate(index + 1)} className="bg-palette/40 hover:bg-palette/20 px-3 py-2 rounded-md">
+                          {index + 1}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+            </div>
+            </div>
+
+
+          </div>
+                  
+      
+    </div>
   )
 }

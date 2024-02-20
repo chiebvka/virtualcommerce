@@ -22,7 +22,7 @@ export default async function Page({ params }: Props) {
   return (
     <div className='flex flex-col space-y-4'>
       <ProductDetails product={product[0]} />
-      <CommentCard />
+      <CommentCard product={product[0]} />
     </div>
   )
 }

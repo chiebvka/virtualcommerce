@@ -22,6 +22,6 @@
     },
     "target": "ES2017"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "cartStore.js", "app/api/stripe/route.js", "sanity/utils.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "cartStore.js", "app/api/stripe/route.js", "sanity/utils.js", "app/(routes)/products/_components/FlashCard.jsx", "app/(routes)/product/[slug]/_components/CommentCard.jsx"],
   "exclude": ["node_modules"]
 }

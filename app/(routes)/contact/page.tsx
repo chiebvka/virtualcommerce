@@ -1,5 +1,6 @@
 import React from 'react'
 import PageHeadings from '../_components/PageHeadings'
+import ContactForm from './_components/ContactForm'
 
 type Props = {}
 
@@ -10,6 +11,7 @@ export default function page({}: Props) {
             title='Contact Us' 
             description='Got Some enquiries? Reach out to us by filling out this form sending an email to operations@virtualsglobal.com'
         />
+        <ContactForm />
         
     </div>
   )
