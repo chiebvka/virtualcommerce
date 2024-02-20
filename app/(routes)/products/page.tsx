@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client"
 
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import PageHeadings from '../_components/PageHeadings'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -10,8 +11,98 @@ import { getAllProducts } from '@/sanity/utils'
 
 type Props = {}
 
+interface Product {
+  _id: string;
+  createdAt: string;
+  name: string;
+  slug: string;
+  description: string;
+  price: string; // Assuming price is a number
+  image: string;
+  extraImages: string[];
+  color: { name: string; _id: string }[];
+  category: { name: string; _id: string }[];
+  size: { name: string; _id: string }[];
+}
+
 
 export default async function page({}: Props) {
+
+  const [data, setData] = useState<Product[]>([]); 
+  const [minPrice, setMinPrice] = useState('');
+  const [sortBy, setSortBy] = useState('latest');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage,setProductsPerPage] = useState(5);
+  const [searchQuery, setSearchQuery] = useState('');
+
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const products = await getAllProducts();
+      setData(products);
+    };
+    fetchData();
+  }, []);
+
+
+  const applyFilters = () => {
+    const filteredProducts = data.filter(product => {
+      const price = parseFloat(product.price); // assuming price is a string
+      const isMinPriceValid = !minPrice || price >= parseFloat(minPrice);
+
+      const matchesSearchQuery =
+        !searchQuery ||
+        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        // Add additional checks based on other relevant attributes
+        // For example: product.description.toLowerCase().includes(searchQuery.toLowerCase())
+        false;
+
+      return isMinPriceValid && matchesSearchQuery;
+    });
+
+    const sortedProducts = [...filteredProducts].sort((a, b) => {
+      if (sortBy === 'latest') {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      } else if (sortBy === 'oldest') {
+        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+      } else if (sortBy === 'highest') {
+        return parseFloat(b.price) - parseFloat(a.price);
+      } else if (sortBy === 'lowest') {
+        return parseFloat(a.price) - parseFloat(b.price);
+      }
+      return 0;
+    });
+
+    setData(sortedProducts);
+  };
+
+  useEffect(() => {
+    applyFilters();
+  }, [minPrice, sortBy, searchQuery]);
+
+  const resetFilters = () => {
+    setMinPrice('');
+    setSortBy('latest');
+    setCurrentPage(1);
+    setProductsPerPage(5);
+    setSearchQuery('');
+    fetchData();
+  };
+
+  const fetchData = async () => {
+    const products = await getAllProducts();
+    setData(products);
+  };
+
+  // Logic for displaying current products
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = data.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  // Change page
+  const paginate = (pageNumber: React.SetStateAction<number>) => setCurrentPage(pageNumber);
+
   return (
     <div className='min-h-screen w-full relative my-auto py-16 gap-y-5 px-3 max-w-7xl mx-auto'>
       <PageHeadings
